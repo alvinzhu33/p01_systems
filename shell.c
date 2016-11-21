@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
-char*[] parse(char* in){
+void parse(char* in){
   strtok(in,"\n");
   char *array[50];
   char *s = in;
@@ -15,11 +15,7 @@ char*[] parse(char* in){
   }
 
   array[i] = 0;
-  return array;
-  
-}
-
-void run(char *[] array) {
+  //return array;
   execvp(array[0], array);
 }
 
@@ -27,8 +23,8 @@ int main() {
   char s1[256];
   printf("~$ ");
   fgets(s1,sizeof(s1),stdin);
-  char *a[50] = parse(s1);
-  run(a);
+  parse(s1);
+  //run(a);
   
   return 0;
 }
