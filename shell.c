@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 
+
+//for each semicolon, fork and pass an array for the child process to do and ask parent to wait
 void parse(char* in){
   strtok(in,"\n");
   char *array[50];
