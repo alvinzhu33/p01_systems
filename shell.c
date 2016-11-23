@@ -37,16 +37,16 @@ void func(char* in){
   int index;
   for (j; j < i; j++) {
     f = fork();
-    //Move this inside loop maybe
     if (f == 0) {
       char *ar[50];
       char *t = commands[j];
       if (j != 0) {
 	t++;
       }
+      
       printf("Hello %s\n",t);  
       int k = 0;
-      while (ar[k] = strsep(&s," ")) {
+      while (ar[k] = strsep(&t," ")) {
 	k++;
       }
       ar[k] = 0;
@@ -57,20 +57,20 @@ void func(char* in){
       int status,r;
       r = wait(&status);
     }
-  }
-
-  
+  }  
 
 }
 
 
 
 int main() {
-  char s1[256];
-  printf("~$ ");
-  fgets(s1,sizeof(s1),stdin);
-  //parse(s1);
-  //run(a);
-  func(s1);
+  while (1) {
+    char s1[256];
+    printf("~$ ");
+    fgets(s1,sizeof(s1),stdin);
+    //parse(s1);
+    //run(a);
+    func(s1);
+  }
   return 0;
 }
