@@ -43,8 +43,11 @@ void func(char* in){
       if (j != 0) {
 	t++;
       }
-      
-      printf("Hello %s\n",t);  
+      if (t[strlen(t)-1] == ' ') {
+	t[strlen(t)-1] = 0;
+      }
+
+      // printf("Hello %s \n",t);  
       int k = 0;
       while (ar[k] = strsep(&t," ")) {
 	k++;
@@ -61,7 +64,17 @@ void func(char* in){
 
 }
 
-
+/*
+char * stripLastSpace(char *s) {
+  char *l = s;
+  while (*(l+1)) {
+    l++;
+  } 
+  if (*l == " ") {
+    *l = "\0";
+  }
+  return s;
+*/
 
 int main() {
   while (1) {
