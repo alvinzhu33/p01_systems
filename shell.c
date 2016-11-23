@@ -42,6 +42,7 @@ void func(char* in){
     }
   }
 
+  //Move this inside loop maybe
   if (f == 0) {
     char *ar[50];
     char *t = commands[j];
