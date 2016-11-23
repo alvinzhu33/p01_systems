@@ -54,6 +54,19 @@ void func(char* in){
       }
       ar[k] = 0;
     
+      //Check if the command is exit   
+      //CURRENTLY NOT FUNCTIONAL
+      printf("first: %s\n",ar[0]);
+      if (strcmp(ar[0],"exit") == 0) {
+	kill(getpid(), SIGKILL);
+	//kill everything after FIX THIS!
+	//ask parent to kill all children
+      }
+
+      //Check if the command is cd
+
+
+      //Other regular commands
       execvp(ar[0],ar);
     }
     else {
