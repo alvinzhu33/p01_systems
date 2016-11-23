@@ -37,31 +37,29 @@ void func(char* in){
   int index;
   for (j; j < i; j++) {
     f = fork();
+    //Move this inside loop maybe
     if (f == 0) {
-      break;
+      char *ar[50];
+      char *t = commands[j];
+      if (j != 0) {
+	t++;
+      }
+      printf("Hello %s\n",t);  
+      int k = 0;
+      while (ar[k] = strsep(&s," ")) {
+	k++;
+      }
+      ar[k] = 0;
+    
+      execvp(ar[0],ar);
+    }
+    else {
+      int status,r;
+      r = wait(&status);
     }
   }
 
-  //Move this inside loop maybe
-  if (f == 0) {
-    char *ar[50];
-    char *t = commands[j];
-    if (j != 0) {
-      t++;
-    }
-    printf("Hello %s\n",t);  
-    int k = 0;
-    while (ar[k] = strsep(&s," ")) {
-      k++;
-    }
-    ar[k] = 0;
-    
-    //execvp(ar[0],ar);
-  }
-  else {
-    int status,r;
-    r = wait(&status);
-  }
+  
 
 }
 
