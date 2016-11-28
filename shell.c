@@ -45,7 +45,7 @@ void execute(char* in){
       int wordCount = 0;
       int outChange = 0;
       int inChange = 0;
-      while (comStr) {
+      while (comStr && !inChange && !outChange) {
 	char *part = strsep(&comStr," ");
 	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0) {
 	  exeCom[wordCount] = part;
@@ -60,17 +60,21 @@ void execute(char* in){
       }
       exeCom[wordCount] = 0;
 
-      printf("stuffy\n");
-      printf("S: %s\n", store);
-      printf("SSSSSSSSSS\n");
 
-      
-      //This should work but for some reason the > disappears
       if (outChange) {
-	printf("Hi\n");
 	umask(000);
 	int fd = open("test",O_CREAT | O_WRONLY);
+	//The fd below hasn't been tested yet
+	//int fd = open(comStr,O_CREAT | O_WRONLY);
 	dup2(fd,1);
+	close(fd);
+	execvp(exeCom[0],exeCom);
+      }
+      //This has not yet been tested
+      else if (inChange) {
+	umask(000);
+	int fd = open(comStr,O_RDONLY);
+	dup2(fd,0);
 	close(fd);
 	execvp(exeCom[0],exeCom);
       }
