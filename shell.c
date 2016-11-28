@@ -34,7 +34,6 @@ void execute(char* in){
 	comStr[strlen(comStr)-1] = 0;
       }
 
-      // printf("Hello %s \n",t);
       int wordCount = 0;
       while (exeCom[wordCount] = strsep(&comStr," ")) {
 	wordCount++;
@@ -55,10 +54,11 @@ void execute(char* in){
 int main() {
   while (1) {
     char s1[256];
-    printf("~$ ");
+    char cwd[256];
+    getcwd(cwd, sizeof(cwd));
+    
+    printf("%s$ ", cwd);
     fgets(s1,sizeof(s1),stdin);
-    //parse(s1);
-    //run(a);
     execute(s1);
   }
   return 0;
