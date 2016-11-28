@@ -45,9 +45,10 @@ void execute(char* in){
       int wordCount = 0;
       int outChange = 0;
       int inChange = 0;
-      while (comStr && !inChange && !outChange) {
+      int pipeTrue = 0;
+      while (comStr && !inChange && !outChange && !pipeTrue) {
 	char *part = strsep(&comStr," ");
-	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0) {
+	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0 && strcmp(part,"|") != 0) {
 	  exeCom[wordCount] = part;
 	}
 	if (strcmp(part,">") == 0) {
@@ -55,6 +56,9 @@ void execute(char* in){
 	}
 	if (strcmp(part,"<") == 0) {
 	  inChange = 1;
+	}
+	if (strcmp(part,"|") == 0) {
+	  pipeTrue = 1;
 	}
 	wordCount++;
       }
@@ -77,6 +81,17 @@ void execute(char* in){
 	dup2(fd,0);
 	close(fd);
 	execvp(exeCom[0],exeCom);
+      }
+      //This has not yet been tested
+      else if (pipeTrue) {
+	umask(000);
+	int fd = open("TUNNEL", O_CREAT | O_RDWR);
+	dup2(fd,1);
+	//Execute the first statement
+	dup2(fd,0);
+	//Execute the second statement
+	close(fd);
+	remove("TUNNEL");
       }
       else if (strcmp(exeCom[0],"cd") == 0) {
 	chdir(exeCom[1]);
