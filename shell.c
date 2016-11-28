@@ -5,26 +5,6 @@
 #include <signal.h>
 #include "headers.h"
 
-//for each semicolon, fork and pass an array for the child process to do and ask parent to wait
-/*void parse(char* in){
-  strtok(in,"\n");
-  char *array[50];
-  char *s = in;
-
-  int i = 0;
-  while(s){
-  array[i] = strsep(&s," ");
-  i++;
-  }
-
-  array[i] = 0;
-  //return array;
-  execvp(array[0], array);
-  }*/
-
-//
-
-
 //STILL NEED PIPING AND REDIRECTION
 void execute(char* in){
   strtok(in,"\n");
@@ -70,20 +50,7 @@ void execute(char* in){
       r = wait(&status);
     }
   }
-
 }
-
-/*
-  char * stripLastSpace(char *s) {
-  char *l = s;
-  while (*(l+1)) {
-  l++;
-  }
-  if (*l == " ") {
-  *l = "\0";
-  }
-  return s;
-*/
 
 int main() {
   while (1) {
