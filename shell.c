@@ -3,7 +3,12 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "headers.h"
+
+#define WHT "\x1B[0m"
+#define BLU "\x1B[36m"
+#define PUR "\x1B[35m"
 
 //STILL NEED PIPING AND REDIRECTION
 void execute(char* in){
@@ -19,7 +24,7 @@ void execute(char* in){
   int counter = 0;
   int forker;
   int index;
-  for (counter; counter < comCount; counter++) { 
+  for (counter; counter < comCount; counter++) {
     if (strcmp(commands[counter]," exit ") == 0) {
       exit(0);
     }
@@ -57,7 +62,7 @@ int main() {
     char cwd[256];
     getcwd(cwd, sizeof(cwd));
     
-    printf("%s$ ", cwd);
+    printf(BLU"%s"WHT"$ ", cwd);
     fgets(s1,sizeof(s1),stdin);
     execute(s1);
   }
