@@ -39,15 +39,47 @@ void execute(char* in){
 	comStr[strlen(comStr)-1] = 0;
       }
 
+      char *store = commands[counter];
+      printf("S: %s\n", commands[counter]);
+      
       int wordCount = 0;
-      while (exeCom[wordCount] = strsep(&comStr," ")) {
+      int outChange = 0;
+      int inChange = 0;
+      while (comStr) {
+	char *part = strsep(&comStr," ");
+	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0) {
+	  exeCom[wordCount] = part;
+	}
+	if (strcmp(part,">") == 0) {
+	  outChange = 1;
+	}
+	if (strcmp(part,"<") == 0) {
+	  inChange = 1;
+	}
 	wordCount++;
       }
       exeCom[wordCount] = 0;
-      if (strcmp(exeCom[0],"cd") == 0) {
+
+      printf("stuffy\n");
+      printf("S: %s\n", store);
+      printf("SSSSSSSSSS\n");
+
+      
+      //This should work but for some reason the > disappears
+      if (outChange) {
+	printf("Hi\n");
+	umask(000);
+	int fd = open("test",O_CREAT | O_WRONLY);
+	dup2(fd,1);
+	close(fd);
+	execvp(exeCom[0],exeCom);
+      }
+      else if (strcmp(exeCom[0],"cd") == 0) {
 	chdir(exeCom[1]);
       }
-      execvp(exeCom[0],exeCom);
+      else {
+	execvp(exeCom[0],exeCom);
+      }
     }
     else {
       int status,r;
