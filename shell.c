@@ -39,9 +39,6 @@ void execute(char* in){
 	comStr[strlen(comStr)-1] = 0;
       }
 
-      char *store = commands[counter];
-      printf("S: %s\n", commands[counter]);
-      
       int wordCount = 0;
       int outChange = 0;
       int inChange = 0;
@@ -50,6 +47,7 @@ void execute(char* in){
 	char *part = strsep(&comStr," ");
 	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0 && strcmp(part,"|") != 0) {
 	  exeCom[wordCount] = part;
+	  wordCount++;
 	}
 	if (strcmp(part,">") == 0) {
 	  outChange = 1;
@@ -60,29 +58,26 @@ void execute(char* in){
 	if (strcmp(part,"|") == 0) {
 	  pipeTrue = 1;
 	}
-	wordCount++;
+
       }
       exeCom[wordCount] = 0;
 
-
       if (outChange) {
 	umask(000);
-	int fd = open("test",O_CREAT | O_WRONLY);
-	//The fd below hasn't been tested yet
-	//int fd = open(comStr,O_CREAT | O_WRONLY);
+	remove(comStr);
+	int fd = open(comStr,O_CREAT | O_RDWR, 0644);
 	dup2(fd,1);
 	close(fd);
 	execvp(exeCom[0],exeCom);
       }
-      //This has not yet been tested
       else if (inChange) {
 	umask(000);
-	int fd = open(comStr,O_RDONLY);
+	int fd = open(comStr,O_CREAT | O_RDWR, 0644);
 	dup2(fd,0);
 	close(fd);
 	execvp(exeCom[0],exeCom);
       }
-      //This has not yet been tested
+      //This is not yet functional
       else if (pipeTrue) {
 	umask(000);
 	int fd = open("TUNNEL", O_CREAT | O_RDWR);
