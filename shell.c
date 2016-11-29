@@ -77,7 +77,7 @@ void execute(char* in){
 	close(fd);
 	execvp(exeCom[0],exeCom);
       }
-      //This is not yet functional
+      //This is not yet functional and not tested
       else if (pipeTrue) {
 	umask(000);
 	int fd = open("TUNNEL", O_CREAT | O_RDWR);
@@ -86,6 +86,7 @@ void execute(char* in){
 	dup2(fd,0);
 	//Execute the second statement
 	close(fd);
+	execvp(execCom[0],exeCom);
 	remove("TUNNEL");
       }
       else if (strcmp(exeCom[0],"cd") == 0) {
