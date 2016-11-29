@@ -86,7 +86,7 @@ void execute(char* in){
 	dup2(fd,0);
 	//Execute the second statement
 	close(fd);
-	execvp(execCom[0],exeCom);
+	execvp(exeCom[0],exeCom);
 	remove("TUNNEL");
       }
       else if (strcmp(exeCom[0],"cd") == 0) {
