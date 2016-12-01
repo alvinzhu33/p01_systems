@@ -10,6 +10,9 @@
 #define BLU "\x1B[36m"
 #define PUR "\x1B[35m"
 
+void changeOutput(char *s[],char *f);
+void changeInput(char *s[],char *f);
+
 char* stripper(char* stripping){
   while(stripping[0] == ' '){
     *stripping++;
@@ -70,57 +73,33 @@ void execute(char* in){
       exeCom[wordCount] = 0;
 
       if (outChange) {
-	umask(000);
-	remove(comStr);
-	int fd = open(comStr,O_CREAT | O_RDWR, 0644);
-	dup2(fd,1);
-	close(fd);
-	execvp(exeCom[0],exeCom);
+	changeOutput(exeCom,comStr);
       }
       else if (inChange) {
-	umask(000);
-	int fd = open(comStr,O_CREAT | O_RDWR, 0644);
-	dup2(fd,0);
-	close(fd);
-	execvp(exeCom[0],exeCom);
+	changeInput(exeCom,comStr);
       }
-      //This is not yet functional and not tested
       else if (pipeTrue) {
-	
-	umask(000);
-	remove(comStr);
-	int fd = open("TUNNEL",O_CREAT | O_RDWR, 0644);
-       
-
 	
 	char *command2[50];
 
 	wordCount = 0;	
 	while (command2[wordCount] = strsep(&comStr," ")) {
 	  wordCount++;
-	  printf("jceieibdeib\n");
-	  printf("%s > \n",command2[wordCount-1]);
 	}
 
-	
-	command2[wordCount] = 0;
+	int child;
 
-	dup2(fd,1);
-	close(fd);
-	//pushes output into TUNNEL
-	execvp(exeCom[0],exeCom);
-	
+	child = fork();
 
-	fd = open("TUNNEL",O_RDONLY);
-
-	
-	dup2(fd,0);
-	//it should pushes TUNNEL to input here
-	
-	execvp(command2[0],command2);
-	remove("TUNNEL");
-
-	
+	if (child == 0) {
+	  changeOutput(exeCom,"Tunnel");
+	}
+	else {
+	  int status,r;
+	  r = wait(&status);
+	  changeInput(command2,"Tunnel");
+	}
+        	
       }
       else if (strcmp(exeCom[0],"cd") == 0) {
 	chdir(exeCom[1]);
@@ -135,6 +114,30 @@ void execute(char* in){
     }
   }
 }
+
+
+void changeOutput(char *s[], char *f) {
+  umask(000);
+  remove(f);
+  int fd = open(f,O_CREAT | O_RDWR, 0644);
+  dup2(fd,1);
+  //the output turns into fd
+  close(fd);
+  execvp(s[0],s);
+}
+
+
+void changeInput(char *s[],char *f) {
+  umask(000);
+  int fd = open(f,O_CREAT | O_RDWR, 0644);
+  dup2(fd,0);
+  //the input turns into fd
+  close(fd);
+  execvp(s[0],s);
+}
+
+
+
 
 int main() {
   while (1) {
