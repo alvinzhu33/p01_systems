@@ -83,12 +83,7 @@ void execute(char* in){
 	umask(000);
 	remove(comStr);
 	int fd = open("TUNNEL",O_CREAT | O_RDWR, 0644);
-	dup2(fd,1);
-	//execvp(exeCom[0],exeCom);
-	//above is working, but need to send output 	
-	
-	dup2(fd,0);
-	close(fd);
+       
 
 	
 	char *command2[50];
@@ -99,9 +94,22 @@ void execute(char* in){
 	  printf("jceieibdeib\n");
 	  printf("%s > \n",command2[wordCount-1]);
 	}
+
+	
 	command2[wordCount] = 0;
 
+	dup2(fd,1);
+	close(fd);
+	//pushes output into TUNNEL
 	execvp(exeCom[0],exeCom);
+	
+
+	fd = open("TUNNEL",O_RDONLY);
+
+	
+	dup2(fd,0);
+	//it should pushes TUNNEL to input here
+	
 	execvp(command2[0],command2);
 	remove("TUNNEL");
 
