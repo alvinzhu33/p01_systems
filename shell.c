@@ -95,9 +95,17 @@ void execute(char* in){
 	  changeOutput(exeCom,"Tunnel");
 	}
 	else {
-	  int status,r;
-	  r = wait(&status);
-	  changeInput(command2,"Tunnel");
+	  int status,c2;
+	  wait(&status);
+	  c2 = fork();
+	  if (c2 == 0) {
+	    changeInput(command2,"Tunnel");
+	  }
+	  else {
+	    int status;
+	    wait(&status);
+	    remove("Tunnel");
+	  }
 	}
         	
       }
