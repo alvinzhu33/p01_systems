@@ -25,7 +25,7 @@ void execute(char* in){
   int forker;
   int index;
   for (counter; counter < comCount; counter++) {
-    if (strcmp(commands[counter]," exit ") == 0) {
+    if (strstr(commands[counter],"exit")) {
       exit(0);
     }
     forker = fork();
@@ -79,15 +79,33 @@ void execute(char* in){
       }
       //This is not yet functional and not tested
       else if (pipeTrue) {
+	
 	umask(000);
-	int fd = open("TUNNEL", O_CREAT | O_RDWR);
+	remove(comStr);
+	int fd = open("TUNNEL",O_CREAT | O_RDWR, 0644);
 	dup2(fd,1);
-	//Execute the first statement
+	//execvp(exeCom[0],exeCom);
+	//above is working, but need to send output 	
+	
 	dup2(fd,0);
-	//Execute the second statement
 	close(fd);
+
+	
+	char *command2[50];
+
+	wordCount = 0;	
+	while (command2[wordCount] = strsep(&comStr," ")) {
+	  wordCount++;
+	  printf("jceieibdeib\n");
+	  printf("%s > \n",command2[wordCount-1]);
+	}
+	command2[wordCount] = 0;
+
 	execvp(exeCom[0],exeCom);
+	execvp(command2[0],command2);
 	remove("TUNNEL");
+
+	
       }
       else if (strcmp(exeCom[0],"cd") == 0) {
 	chdir(exeCom[1]);
