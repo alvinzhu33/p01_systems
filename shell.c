@@ -10,6 +10,19 @@
 #define BLU "\x1B[36m"
 #define PUR "\x1B[35m"
 
+char* stripper(char* stripping){
+  while(stripping[0] == ' '){
+    *stripping++;
+  }
+  while(stripping[strlen(stripping)-1] == ' '){
+    stripping[strlen(stripping)-1] = 0;
+  }
+  int counter = 0;
+
+  char *stripped = stripping;
+  return stripped;
+}
+
 //STILL NEED PIPING AND REDIRECTION
 void execute(char* in){
   strtok(in,"\n");
@@ -31,13 +44,7 @@ void execute(char* in){
     forker = fork();
     if (forker == 0) {
       char *exeCom[50];
-      char *comStr = commands[counter];
-      if (counter != 0) {
-	comStr++;
-      }
-      if (comStr[strlen(comStr)-1] == ' ') {
-	comStr[strlen(comStr)-1] = 0;
-      }
+      char *comStr = stripper(commands[counter]);
 
       int wordCount = 0;
       int outChange = 0;
