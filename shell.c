@@ -124,6 +124,7 @@ void execute(char* in){
             }
             else {
                 execvp(exeCom[0],exeCom);
+		raise(15);
             }
         }
         else {
@@ -142,6 +143,7 @@ void changeOutput(char *s[], char *f) {
   //the output turns into fd
   close(fd);
   execvp(s[0],s);
+  raise(15);
 }
 
 
@@ -152,6 +154,7 @@ void changeInput(char *s[],char *f) {
   //the input turns into fd
   close(fd);
   execvp(s[0],s);
+  raise(15);
 }
 
 
