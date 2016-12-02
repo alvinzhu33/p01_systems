@@ -10,9 +10,6 @@
 #define BLU "\x1B[36m"
 #define PUR "\x1B[35m"
 
-void changeOutput(char *s[],char *f);
-void changeInput(char *s[],char *f);
-
 char* stripper(char* stripping){
   while(stripping[0] == ' '){
     *stripping++;
@@ -23,12 +20,12 @@ char* stripper(char* stripping){
   int counter = 0;
   for(counter; counter<strlen(stripping)-1; counter++){
     if(stripping[counter] == ' ' && stripping[counter+1]==' '){
-        int changer = counter;
-        while(changer<strlen(stripping)-1){
-            stripping[changer]=stripping[changer+1];
-            changer++;
-        }
-        counter--;
+      int changer = counter;
+      while(changer<strlen(stripping)-1){
+	stripping[changer]=stripping[changer+1];
+	changer++;
+      }
+      counter--;
     }
   }
 
@@ -36,7 +33,6 @@ char* stripper(char* stripping){
   return stripped;
 }
 
-//STILL NEED PIPING AND REDIRECTION
 void execute(char* in){
     strtok(in,"\n");
     char *commands[50];
@@ -51,7 +47,7 @@ void execute(char* in){
     int forker;
     int index;
     for (counter; counter < comCount; counter++) {
-        if (strstr(commands[counter],"exit")) {
+      if (!strcmp(stripper(commands[counter]),"exit")) {
             exit(0);
         }
         forker = fork();
