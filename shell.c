@@ -15,24 +15,25 @@ char* stripper(char* stripping){
     *stripping++;
   }
   while(stripping[strlen(stripping)-1] == ' '){
-    printf("hello");
     stripping[strlen(stripping)-1] = 0;
   }
-  printf("\nHERE: %s\n", stripping);
   int counter = 0;
-  for(counter; counter<strlen(stripping)-1; counter++){
+  int length = strlen(stripping)-1;
+  for(counter; counter<length; counter++){
     if(stripping[counter] == ' ' && stripping[counter+1]==' '){
       int changer = counter;
-      while(changer<strlen(stripping)-1){
+      while(changer<length){
 	stripping[changer]=stripping[changer+1];
 	changer++;
       }
       counter--;
+      stripping[length]=0;
+      length--;
     }
   }
   
   char *stripped = stripping;
-  
+  printf("\nHERE: %s\n", stripped);
   return stripped;
 }
 
