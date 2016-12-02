@@ -4,6 +4,8 @@
 #include <string.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "headers.h"
 
 #define WHT "\x1B[0m"
@@ -18,20 +20,17 @@ char* stripper(char* stripping){
     stripping[strlen(stripping)-1] = 0;
   }
   int counter = 0;
-  int length = strlen(stripping)-1;
-  for(counter; counter<length; counter++){
+  for(counter; counter<strlen(stripping)-1; counter++){
     if(stripping[counter] == ' ' && stripping[counter+1]==' '){
       int changer = counter;
-      while(changer<length){
+      while(changer<strlen(stripping)-1){
 	stripping[changer]=stripping[changer+1];
 	changer++;
       }
       counter--;
-      stripping[length]=0;
-      length--;
     }
   }
-  
+
   char *stripped = stripping;
   return stripped;
 }
@@ -167,7 +166,9 @@ int main() {
 
     printf(BLU"%s"WHT"$ ", cwd);
     fgets(s1,sizeof(s1),stdin);
+    
     execute(s1);
+    
   }
   return 0;
 }

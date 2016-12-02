@@ -4,8 +4,9 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 ##Successful Implements:
 * Continuously forks and executes commands.
 * Parses multiple commands on the same line using ";".
-* Exit works exactly
-* Redirections work for both "<" and ">".
+* Exit is functional.
+* Redirections are functional for both "<" and ">".
+* Pipes are functional.
 * Always shows current working directory.
 * Pretty colors for easier read.
 * Multiple spaces are stripped out (something like "          ls      -l     " works).
@@ -13,8 +14,15 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 ##Unsuccessful Implements:
 * Colors not differentiated for user input and command output.
 
+
+##Limits:
+* Piping is limited to a single pipe.
+* Redirecting only accepts two arguments, aka ls > file, cat < file.
+* You cannot pipe and redirect in the same command.
+
 ##Bugs:
-* Doesn't let you know if a command doesn't work.
+* Doesn't let you know if a command does not exist.
+
 
 ##Function Headers:
 Takes in an input (in) from main and returns nothing. This function is the bulk of our shell. It makes a fork and parses the input to determine its main command. If the command is execvp-able, it does the command. Otherwise, we will redirect it elsewhere.
@@ -28,3 +36,4 @@ Redirects for ">" (it changes the output)
 
 Redirects for "<" (it changes the input)
 	  void changeInput(char *s[],char *f);
+
