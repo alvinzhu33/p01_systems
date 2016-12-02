@@ -21,7 +21,7 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * You cannot pipe and redirect in the same command.
 
 ##Bugs:
-* Doesn't let you know if a command does not exist.
+* None currently found. Hope there aren't any ;(
 
 
 ##Function Headers:
