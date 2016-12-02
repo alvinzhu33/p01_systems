@@ -15,8 +15,10 @@ char* stripper(char* stripping){
     *stripping++;
   }
   while(stripping[strlen(stripping)-1] == ' '){
+    printf("hello");
     stripping[strlen(stripping)-1] = 0;
   }
+  printf("\nHERE: %s\n", stripping);
   int counter = 0;
   for(counter; counter<strlen(stripping)-1; counter++){
     if(stripping[counter] == ' ' && stripping[counter+1]==' '){
@@ -28,8 +30,9 @@ char* stripper(char* stripping){
       counter--;
     }
   }
-
+  
   char *stripped = stripping;
+  
   return stripped;
 }
 
