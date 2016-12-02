@@ -21,6 +21,16 @@ char* stripper(char* stripping){
     stripping[strlen(stripping)-1] = 0;
   }
   int counter = 0;
+  for(counter; counter<strlen(stripping)-1; counter++){
+    if(stripping[counter] == ' ' && stripping[counter+1]==' '){
+        int changer = counter;
+        while(changer<strlen(stripping)-1){
+            stripping[changer]=stripping[changer+1];
+            changer++;
+        }
+        counter--;
+    }
+  }
 
   char *stripped = stripping;
   return stripped;
@@ -28,99 +38,99 @@ char* stripper(char* stripping){
 
 //STILL NEED PIPING AND REDIRECTION
 void execute(char* in){
-  strtok(in,"\n");
-  char *commands[50];
-  char *inputStr = in;
+    strtok(in,"\n");
+    char *commands[50];
+    char *inputStr = in;
 
-  int comCount = 0;
-  while (commands[comCount] = strsep(&inputStr,";")) {
-    comCount++;
-  }
-
-  int counter = 0;
-  int forker;
-  int index;
-  for (counter; counter < comCount; counter++) {
-    if (strstr(commands[counter],"exit")) {
-      exit(0);
+    int comCount = 0;
+    while (commands[comCount] = strsep(&inputStr,";")) {
+        comCount++;
     }
-    forker = fork();
-    if (forker == 0) {
-      char *exeCom[50];
-      char *comStr = stripper(commands[counter]);
 
-      int wordCount = 0;
-      int outChange = 0;
-      int inChange = 0;
-      int pipeTrue = 0;
-      while (comStr && !inChange && !outChange && !pipeTrue) {
-	char *part = strsep(&comStr," ");
-	if (strcmp(part,">") != 0 && strcmp(part,"<") != 0 && strcmp(part,"|") != 0) {
-	  exeCom[wordCount] = part;
-	  wordCount++;
-	}
-	if (strcmp(part,">") == 0) {
-	  outChange = 1;
-	}
-	if (strcmp(part,"<") == 0) {
-	  inChange = 1;
-	}
-	if (strcmp(part,"|") == 0) {
-	  pipeTrue = 1;
-	}
+    int counter = 0;
+    int forker;
+    int index;
+    for (counter; counter < comCount; counter++) {
+        if (strstr(commands[counter],"exit")) {
+            exit(0);
+        }
+        forker = fork();
+        if (forker == 0) {
+            char *exeCom[50];
+            char *comStr = stripper(commands[counter]);
 
-      }
-      exeCom[wordCount] = 0;
+            int wordCount = 0;
+            int outChange = 0;
+            int inChange = 0;
+            int pipeTrue = 0;
+            while (comStr && !inChange && !outChange && !pipeTrue) {
+                char *part = strsep(&comStr," ");
+                if (strcmp(part,">") != 0 && strcmp(part,"<") != 0 && strcmp(part,"|") != 0) {
+                    exeCom[wordCount] = part;
+                    wordCount++;
+                }
+                if (strcmp(part,">") == 0) {
+                    outChange = 1;
+                }
+                if (strcmp(part,"<") == 0) {
+                    inChange = 1;
+                }
+                if (strcmp(part,"|") == 0) {
+                    pipeTrue = 1;
+                }
 
-      if (outChange) {
-	changeOutput(exeCom,comStr);
-      }
-      else if (inChange) {
-	changeInput(exeCom,comStr);
-      }
-      else if (pipeTrue) {
-	
-	char *command2[50];
+            }
+            exeCom[wordCount] = 0;
 
-	wordCount = 0;	
-	while (command2[wordCount] = strsep(&comStr," ")) {
-	  wordCount++;
-	}
+            if (outChange) {
+                changeOutput(exeCom,comStr);
+            }
+            else if (inChange) {
+                changeInput(exeCom,comStr);
+            }
+            else if (pipeTrue) {
 
-	int child;
+                char *command2[50];
 
-	child = fork();
+                wordCount = 0;
+                while (command2[wordCount] = strsep(&comStr," ")) {
+                    wordCount++;
+                }
 
-	if (child == 0) {
-	  changeOutput(exeCom,"Tunnel");
-	}
-	else {
-	  int status,c2;
-	  wait(&status);
-	  c2 = fork();
-	  if (c2 == 0) {
-	    changeInput(command2,"Tunnel");
-	  }
-	  else {
-	    int status;
-	    wait(&status);
-	    remove("Tunnel");
-	  }
-	}
-        	
-      }
-      else if (strcmp(exeCom[0],"cd") == 0) {
-	chdir(exeCom[1]);
-      }
-      else {
-	execvp(exeCom[0],exeCom);
-      }
+                int child;
+
+                child = fork();
+
+                if (child == 0) {
+                    changeOutput(exeCom,"Tunnel");
+                }
+                else {
+                    int status,c2;
+                    wait(&status);
+                    c2 = fork();
+                    if (c2 == 0) {
+                        changeInput(command2,"Tunnel");
+                    }
+                    else {
+                        int status;
+                        wait(&status);
+                        remove("Tunnel");
+                    }
+                }
+
+            }
+            else if (strcmp(exeCom[0],"cd") == 0) {
+                chdir(exeCom[1]);
+            }
+            else {
+                execvp(exeCom[0],exeCom);
+            }
+        }
+        else {
+            int status,r;
+            r = wait(&status);
+        }
     }
-    else {
-      int status,r;
-      r = wait(&status);
-    }
-  }
 }
 
 
@@ -152,7 +162,7 @@ int main() {
     char s1[256];
     char cwd[256];
     getcwd(cwd, sizeof(cwd));
-    
+
     printf(BLU"%s"WHT"$ ", cwd);
     fgets(s1,sizeof(s1),stdin);
     execute(s1);
