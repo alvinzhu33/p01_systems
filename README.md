@@ -21,23 +21,27 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * You cannot pipe and redirect in the same command.
 
 ##Bugs:
-* None currently found. Hope there aren't any ;(
+* Doesn't let you know if a command does not exist.
 
 
-##Function Headers:
-Takes in an input (in) from main and returns nothing. This function is the bulk of our shell. It makes a fork and parses the input to determine its main command. If the command is execvp-able, it does the command. Otherwise, we will redirect it elsewhere.
-	
-	void execute(char* in);
+##Files and Function Headers:
 
-Takes in an string (stripping) and strips off all excess spaces (in front "    ls", in middle "ls     -l", in back "ls        "). Returns the nicely stripped string
+####void execute(char* in);
+* Input: string in
+* Output: Nothing
+* Function: This function is the bulk of our shell. It makes a fork and parses the input to determine its main command. If the command is execvp-able, it does the command. Otherwise, we will redirect it elsewhere.
 
-	char* stripper(char* stripping);
+####char* stripper(char* stripping);
+* Input: string stripping
+* Output: string stripping but without the multiple spaces
+* Function: Strips off all excess spaces in stripping (in front "    ls", in middle "ls     -l", in back "ls        ").
 
-Redirects for ">" (it changes the output)
+####void changeOutput(char *s[],char *f);
+* Input: array of string s and string f
+* Output: Nothing
+* Function: Redirects for ">" (it changes the output).
 
-	void changeOutput(char *s[],char *f);
-
-Redirects for "<" (it changes the input)
-
-	void changeInput(char *s[],char *f);
-
+####void changeInput(char *s[],char *f);
+* Input: array of string s and string f
+* Output: Nothing
+* Function: Redirects for "<" (it changes the input)
