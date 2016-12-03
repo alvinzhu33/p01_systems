@@ -31,10 +31,15 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * Output: Nothing
 * Function: This function is the bulk of our shell. It makes a fork and parses the input to determine its main command. If the command is execvp-able, it does the command. Otherwise, we will redirect it elsewhere.
 
+####int main();
+* Input: Nothing
+* Output: 0 (Nothing)
+* Function: Prints the current working directory in blue and receives user input.
+
 ####char* stripper(char* stripping);
 * Input: string stripping
 * Output: string stripping but without the multiple spaces
-* Function: Strips off all excess spaces in stripping (in front "    ls", in middle "ls     -l", in back "ls        ").
+* Function: Strips off all excess spaces in stripping (in the front ["    ls"], in the middle ["ls     -l"], and in the back ["ls        "]).
 
 ####void changeOutput(char *s[],char *f);
 * Input: array of string s and string f
