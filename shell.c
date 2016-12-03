@@ -10,61 +10,6 @@
 #define BLU "\x1B[36m"
 #define PUR "\x1B[35m"
 
-char* stripper(char* stripping){
-    while(stripping[0] == ' '){
-        *stripping++;
-    }
-    while(stripping[strlen(stripping)-1] == ' '){
-        stripping[strlen(stripping)-1] = 0;
-    }
-    int counter = 0;
-    int length = strlen(stripping)-1;
-    for(counter; counter<length; counter++){
-        if(stripping[counter] == ' ' && stripping[counter+1]==' '){
-            int changer = counter;
-            while(changer<length){
-                stripping[changer]=stripping[changer+1];
-                changer++;
-            }
-            counter--;
-            stripping[length]=0;
-            length--;
-        }
-    }
-
-    char *stripped = stripping;
-    return stripped;
-}
-
-void piper(char *comStr, char *exeCom[]){
-    char *command2[50];
-
-    int wordCount = 0;
-    while (command2[wordCount] = strsep(&comStr," ")) {
-        wordCount++;
-    }
-
-    int child;
-
-    child = fork();
-
-    if (child == 0) {
-        changeOutput(exeCom,"Tunnel");
-    }
-    else {
-        int status,c2;
-        wait(&status);
-        c2 = fork();
-        if (c2 == 0) {
-            changeInput(command2,"Tunnel");
-        }
-        else {
-            int status;
-            wait(&status);
-            remove("Tunnel");
-        }
-    }
-}
 
 void execute(char* in){
     strtok(in,"\n");
@@ -118,7 +63,7 @@ void execute(char* in){
                 changeInput(exeCom,comStr);
             }
             else if (pipeTrue) {
-                piper(comStr, exeCom);
+                piper(exeCom, comStr);
             }
             else if (strcmp(exeCom[0],"cd") == 0) {
                 chdir(exeCom[1]);
@@ -135,6 +80,33 @@ void execute(char* in){
             r = wait(&status);
         }
     }
+}
+
+
+char* stripper(char* stripping){
+    while(stripping[0] == ' '){
+        *stripping++;
+    }
+    while(stripping[strlen(stripping)-1] == ' '){
+        stripping[strlen(stripping)-1] = 0;
+    }
+    int counter = 0;
+    int length = strlen(stripping)-1;
+    for(counter; counter<length; counter++){
+        if(stripping[counter] == ' ' && stripping[counter+1]==' '){
+            int changer = counter;
+            while(changer<length){
+                stripping[changer]=stripping[changer+1];
+                changer++;
+            }
+            counter--;
+            stripping[length]=0;
+            length--;
+        }
+    }
+
+    char *stripped = stripping;
+    return stripped;
 }
 
 
@@ -168,6 +140,35 @@ void changeInput(char *s[],char *f) {
 }
 
 
+void piper(char *s[], char *f){
+    char *command2[50];
+
+    int wordCount = 0;
+    while (command2[wordCount] = strsep(&f," ")) {
+        wordCount++;
+    }
+
+    int child;
+
+    child = fork();
+
+    if (child == 0) {
+        changeOutput(s,"Tunnel");
+    }
+    else {
+        int status,c2;
+        wait(&status);
+        c2 = fork();
+        if (c2 == 0) {
+            changeInput(command2,"Tunnel");
+        }
+        else {
+            int status;
+            wait(&status);
+            remove("Tunnel");
+        }
+    }
+}
 
 
 int main() {

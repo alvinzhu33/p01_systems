@@ -18,7 +18,7 @@ void changeOutput(char *s[],char *f);
 //Function: Redirects for "<" (it changes the input).
 void changeInput(char *s[],char *f);
 
-//Input: string comStr and array of string exeCom
+//Input: array of string s and string f
 //Output: Nothing
 //Function: Accomplishes the piping for our shell.
-void piper(char *comStr, char *exeCom[]){
+void piper(char *s[],char *f);
