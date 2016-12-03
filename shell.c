@@ -52,7 +52,6 @@ void execute(char* in){
                 if (strcmp(part,"|") == 0) {
                     pipeTrue = 1;
                 }
-
             }
             exeCom[wordCount] = 0;
 
@@ -70,7 +69,11 @@ void execute(char* in){
             }
             else {
                 if (execvp(exeCom[0],exeCom) == -1) {
-                    printf("%s: command not found\n",exeCom[0]);
+                    if (!strcmp(exeCom[0],"unicorn") || !strcmp(exeCom[0], "pegasus") || !strcmp(exeCom[0], "magic") || !strcmp(exeCom[0], "pretty")){
+                        printf("               |))    |))\n .             |  )) /   ))\n \\   ^ ^      |    /      ))\n  \\(((  )))   |   /        ))\n   / G    )))  |  /        ))\n  |o  _)   ))) | /       )))\n   --' |     ))`/      )))\n    ___|              )))\n   / __\\             ))))`()))\n  /\\@   /             `(())))\n  \\/   /  /`_______/\\   \\  ))))\n       | |          \\ \\  |  )))\n       | |           | | |   )))\n       |_@           |_|_@    ))\n      /_/           /_/_/\n");
+                    } else {
+                        printf("%s: command not found\n",exeCom[0]);
+                    }
                 }
                 raise(15);
             }
