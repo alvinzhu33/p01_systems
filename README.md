@@ -49,4 +49,9 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 ####void changeInput(char *s[],char *f);
 * Input: array of string s and string f
 * Output: Nothing
-* Function: Redirects for "<" (it changes the input)
+* Function: Redirects for "<" (it changes the input).
+
+####void piper(char *comStr, char *exeCom[]){
+* Input: string comStr and array of string exeCom
+* Output: Nothing
+* Function: Does the piping for our shell.
