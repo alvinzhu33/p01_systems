@@ -23,7 +23,7 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * You cannot pipe and redirect in the same command.
 
 ##Bugs:
-* Doesn't let you know if a command does not exist.
+* None currently found. Hopefully there's nothing to swat...
 
 
 ##Files and Function Headers:
@@ -44,16 +44,16 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * Function: Strips off all excess spaces in stripping (in the front ["    ls"], in the middle ["ls     -l"], and in the back ["ls        "]).
 
 ####void changeOutput(char *s[],char *f);
-* Input: array of string s and string f
+* Input: array of strings s and string f
 * Output: Nothing
 * Function: Redirects for ">" (it changes the output).
 
 ####void changeInput(char *s[],char *f);
-* Input: array of string s and string f
+* Input: array of strings s and string f
 * Output: Nothing
 * Function: Redirects for "<" (it changes the input).
 
 ####void piper(char *s[],char *f);
-* Input: array of string s and string f
+* Input: array of strings s and string f
 * Output: Nothing
 * Function: Accomplishes the piping for our shell.
