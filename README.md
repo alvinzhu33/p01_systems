@@ -10,7 +10,7 @@ by Alvin Zhu, Karen Huang, and Billy Wong
 * Always shows current working directory.
 * Pretty colors for easier read.
 * Multiple spaces are stripped out (something like "          ls      -l     " works).
-* Prints picture of horse-thing if first word is unicorn, pegasus, magic, or cute.
+* Prints picture of horse-thing if first word is unicorn, pegasus, magic, or pretty.
 
 
 ##Unsuccessful Implements:
